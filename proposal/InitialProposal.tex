@@ -1,0 +1,80 @@
+\documentclass[twoside]{article}
+
+\usepackage{epsfig}
+
+\setlength{\oddsidemargin}{0.25 in}
+\setlength{\evensidemargin}{-0.25 in}
+\setlength{\topmargin}{-0.6 in}
+\setlength{\textwidth}{6.5 in}
+\setlength{\textheight}{8.5 in}
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+
+\newcommand{\lecture}[4]{
+   \pagestyle{myheadings}
+   \thispagestyle{plain}
+   \newpage
+   \setcounter{page}{1}
+   \noindent
+   \begin{center}
+   \framebox{
+      \vbox{\vspace{2mm}
+    \hbox to 6.28in { {\bf STA571:~Advanced machine learning \hfill} }
+       \vspace{6mm}
+       \hbox to 6.28in { {\Large \hfill #1 (#2)  \hfill} }
+       \vspace{6mm}
+       \hbox to 6.28in { {\it Authors: #3} \hfill}
+      \vspace{2mm}}
+   }
+   \end{center}
+   \markboth{#1}{#1}
+   \vspace*{4mm}
+}
+
+\begin{document}
+
+\lecture{Optimizing Trust Region Policy Optimization}{March 17, 2017}{Yixin Lin}
+
+% keep this document to one page.
+
+\section{Motivation}
+
+%What is the real-world problem your project will address? What data
+%will motivate your methodology?  
+
+Trust region policy optimization (or TRPO) is a reinforcement learning algorithm which is a policy gradient approach that uses natural gradients. Though it has proven both successful on a wide variety of tasks and scalable to large amounts of policy parameters, one issue that it (and policy gradient approaches in general) is that it is highly sample inefficient. This means that though there are theoretical convergence guarantees, in practice it may take a long time to reach convergence and require many simulations.
+
+\section{Problem definition} 
+
+%Define this problem quantitatively. What question are you trying to
+%solve? What are the random variables? What is the goal of the project?
+
+Trust region policy optimization is a reinforcement learning algorithm which attempts to optimize a policy $ \pi(a|s) $
+in order to maximize the standard $Q$-function $ Q^\pi(s,a) = r + \gamma \max Q^\pi(s',a') $
+and it does this by assuming a parameterized policy $\pi_\theta$, iteratively improving the policy by optimizing the parameters subject to a maximum KL divergence which is controlled by a hyperparameter $\delta$. This is then approximated by linearization and a Monte Carlo sampling approach.
+
+Our goal is to optimize this using method by using ideas from Bayesian optimization of hyperparameters, e.g. in the Snoek paper we read in class, to optimize the hyperparameters used in each iteration. Specifically, we have the hyperparameters $\delta$ as well as the number of timesteps of data per iteration which can both be optimized every iteration in the way described in the paper.
+
+\section{Models and methods}
+
+%What probabilistic approach will you take to solve the problems? What
+%parameters will be estimated, and how will you estimate those
+%parameters? Do the parameters have interpretations in terms of the
+%solution to the problem you are trying to answer?
+
+We will estimate the optimal policy through the TRPO algorithm, but apply the Gaussian process Bayesian hyperparameter optimization which ideally will result in higher convergence rates. The main issue in TRPO is simply the time and iteration speed, and so a proper Bayesian treatment of hyperparameter optimization should produce better results. The parameters which we estimate will define the best policy we can get on the problem.
+
+\section{Results and validation}
+
+% What will your results show? How will you quantify how well this 
+% approach answered the question? What other models/methods will you 
+% compare these results against? How will you validate the answers 
+% and your uncertainty in the answers?
+
+We will show the learning curves of the algorithm over repeated iterations by comparing to the original TRPO algorithm benchmarks on various reinforcement learning environments. Because of the high variance of the potential results due to the reinforcement learning setup, we will train and validate repeatedly in order to reduce the variance in our results.
+
+% do not include references in this document; your final document will be
+% allowed unlimited citations.
+
+\end{document}
