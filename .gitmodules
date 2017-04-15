@@ -1,0 +1,6 @@
+[submodule "rllab"]
+	path = rllab
+	url = https://github.com/openai/rllab.git
+[submodule "Spearmint"]
+	path = Spearmint
+	url = https://github.com/HIPS/Spearmint
