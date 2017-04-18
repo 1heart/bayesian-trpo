@@ -1,0 +1,15 @@
+{
+    "language"        : "PYTHON",
+    "main-file"       : "exp1.py",
+    "experiment-name" : "trpo_cartpole",
+    "likelihood"      : "NOISELESS",
+    "variables" : {
+        "step_size" : {
+            "type" : "FLOAT",
+            "size" : 1,
+            "min"  : 0.001,
+            "max"  : 0.5
+        }
+    }
+}
+
